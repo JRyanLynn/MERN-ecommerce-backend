@@ -2,6 +2,10 @@ const router = require('express').Router();
 const User = require('../models/User');
 const {verifyToken, verifyTokenAuth, verifyTokenAdmin} = require('./verifyToken');
 
+
+//Post to create new user is in auth.js file
+//Route is http://localhost:5000/api/auth/register
+
 //update
 //localhost:5000/api/users/id
 router.put('/:id', verifyTokenAuth, async (req, res) => {

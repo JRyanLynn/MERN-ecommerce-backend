@@ -6,6 +6,7 @@ const productRoute = require('./routes/product');
 const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const userRoute = require('./routes/user');
+const reviewRoute = require('./routes/reviews');
 //const stripeRoute = require('./routes/stripe')
 
 //check that this is correct
@@ -45,6 +46,9 @@ app.use('/api/orders', orderRoute);
 
 //localhost:5000/create-checkout-session
 app.post('/create-checkout-session', createCheckoutSession);
+
+//reviews
+app.use('/api/reviews', reviewRoute);
 
 //stripe 
 //app.use('/api/checkout', stripeRoute);

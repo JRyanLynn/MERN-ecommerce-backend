@@ -9,9 +9,9 @@ async function createCheckoutSession (req, res) {
     if (!line_items || !customer_email) {
         return res.status(400).json({error: 'Missing required checkout information'});
     }
-     // Add CSP header to allow Stripe scripts
-     res.set('Content-Security-Policy', "script-src 'self' 'unsafe-inline' https://connect-js.stripe.com https://js.stripe.com; frame-src https://connect-js.stripe.com; style-src 'unsafe-inline'");
-     
+    //Adding CSP header
+     res.set('Content-Security-Policy', 'script-src https://connect-js.stripe.com https://js.stripe.com; frame-src https://connect-js.stripe.com; style-src unsafe-inline');
+
     //create a checkout session
     let session;
 

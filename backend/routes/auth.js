@@ -44,39 +44,45 @@ router.post('/register', async (req, res) => {
   }
 });
 
-
-
-
 //Login
-
-//used bcrypt compare to decrypt and check PW
 router.post('/login', async (req, res) => {
-    try {
-      const user = await User.findOne({ username: req.body.username });
-      if (!user) {
-        return res.status(400).send('Username not found');
-      }
-      const isPasswordValid = await bcrypt.compare(
-        req.body.password,
-        user.password
-      );
-      if (!isPasswordValid) {
-        return res.status(400).send('Invalid password');
-      }
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) {
+      return res.status(400).send('Username not found');
+    }
 
-       //json web token 
-       const accessToken = jwt.sign({
+    const isPasswordValid = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+
+    if (!isPasswordValid) {
+      return res.status(400).send('Invalid password');
+    }
+
+    const accessToken = jwt.sign(
+      {
         id: user._id,
         isAdmin: user.isAdmin
-      }, process.env.JWT_KEY, 
-      {expiresIn: '1d'}
-      );
+      },
+      process.env.JWT_KEY,
+      { expiresIn: '1d' }
+    );
 
-      res.status(200).json({accessToken, message: 'Login successful'});
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  }); 
+    // Send user data along with access token
+    res.status(200).json({
+      accessToken,
+      user: {
+        _id: user._id,
+        username: user.username
+      },
+      message: 'Login successful'
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 //exports file must import in server.js
 module.exports = router;

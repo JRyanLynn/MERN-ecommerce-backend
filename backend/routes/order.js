@@ -1,15 +1,15 @@
 const router = require('express').Router();
-const Order = require('../models/Order');
 const { verifyToken, verifyTokenAuth, verifyTokenAdmin } = require('./verifyToken');
+const Order = require('../models/Order');
 
 //create
-router.post("/", verifyToken, async (req, res) => {
+router.post("/", async (req, res) => {
     const newOrder = new Order(req.body);
     try {
       const savedOrder = await newOrder.save();
-      res.status(200).json(savedOrder);
+      res.status(200).send(savedOrder);
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).send(err);
     }
   });
 
@@ -39,7 +39,7 @@ router.delete('/:id', verifyTokenAuth, async (req, res) => {
 });
 
 //Get User Orders
-router.get('/find/:userId', verifyTokenAuth, async (req, res) => {
+router.get('/find/:userId', verifyTokenAdmin, async (req, res) => {
     try {
         const orders = await Order.find({userId: req.params.userId});
         //check security here

@@ -64,7 +64,7 @@ router.get('/', verifyTokenAdmin, async (req, res) => {
         res.status(500).json(err);
     }
 });
-
+  
 //Get user stats
 //localhost:5000/api/users/stats
 //id is the month number like 9 for sept
@@ -73,7 +73,7 @@ router.get('/stats', verifyTokenAdmin, async (req, res) => {
     //last full year
     const lastYear =  new Date(date.setFullYear(date.getFullYear() - 1));
 
-    try {
+    try { 
         //monthly breakdown
         const data = await User.aggregate ([
             //created at greater than last year

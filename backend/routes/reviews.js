@@ -4,7 +4,7 @@ const {verifyToken, verifyTokenAuth, verifyTokenAdmin} = require('./verifyToken'
 
 //post
 //http://localhost:5000/api/reviews
-router.post('/', async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     const newReview = new Review(req.body);
 
     try {

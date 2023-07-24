@@ -25,7 +25,9 @@ mongoose.connect(process.env.MONGO_URI)
 app.use(express.json());
 
 //Allows other servers to connect. Might not need Origin: true
-app.use(cors({origin: '*'}));
+app.use(cors({
+    origin: '*',
+}));
 
 //authenticate users
 app.use('/api/auth', authRoute);

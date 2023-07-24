@@ -26,7 +26,7 @@ app.use(express.json());
 
 //Allows other servers to connect. Might not need Origin: true
 app.use(cors({
-    origin: '*',
+    origin: 'http://plantdecor.onrender.com',
 }));
 
 //authenticate users
